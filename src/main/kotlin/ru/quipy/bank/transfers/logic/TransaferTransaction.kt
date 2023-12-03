@@ -1,6 +1,5 @@
 package ru.quipy.bank.transfers.logic
 
-import ru.quipy.api.*
 import ru.quipy.bank.transfers.api.*
 import ru.quipy.core.annotations.StateTransitionFunc
 import ru.quipy.domain.AggregateState
