@@ -24,7 +24,7 @@ class BankAccountsSubscriber(
             `when`(TransferTransactionAcceptedEvent::class) { event ->
                 val sagaContext = sagaManager
                     .withContextGiven(event.sagaContext)
-                    .performSagaStep("TRANSACTION_PROCESSING", "participant acceptance").sagaContext
+                    .performSagaStep("TRANSACTION_SAGA", "participant acceptance").sagaContext
 
                 transactionEsService.update(event.transactionId) {
                     it.processParticipantAccept(event.bankAccountId)
@@ -33,7 +33,7 @@ class BankAccountsSubscriber(
             `when`(TransferTransactionDeclinedEvent::class) { event ->
                 val sagaContext = sagaManager
                     .withContextGiven(event.sagaContext)
-                    .performSagaStep("TRANSACTION_PROCESSING", "participant decline").sagaContext
+                    .performSagaStep("TRANSACTION_SAGA", "participant decline").sagaContext
 
                 transactionEsService.update(event.transactionId) {
                     it.processParticipantDecline(event.bankAccountId)
@@ -42,7 +42,7 @@ class BankAccountsSubscriber(
             `when`(TransferTransactionProcessedEvent::class) { event ->
                 val sagaContext = sagaManager
                     .withContextGiven(event.sagaContext)
-                    .performSagaStep("TRANSACTION_PROCESSING", "participant commit").sagaContext
+                    .performSagaStep("TRANSACTION_SAGA", "participant commit").sagaContext
 
                 transactionEsService.update(event.transactionId) {
                     it.participantCommitted(event.bankAccountId)
@@ -51,7 +51,7 @@ class BankAccountsSubscriber(
             `when`(TransferTransactionRollbackedEvent::class) { event ->
                 val sagaContext = sagaManager
                     .withContextGiven(event.sagaContext)
-                    .performSagaStep("TRANSACTION_PROCESSING", "participant rollback").sagaContext
+                    .performSagaStep("TRANSACTION_SAGA", "participant rollback").sagaContext
 
                 transactionEsService.update(event.transactionId) {
                     it.participantRollbacked(event.bankAccountId)

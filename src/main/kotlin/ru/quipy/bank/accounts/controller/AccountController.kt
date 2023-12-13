@@ -16,7 +16,7 @@ import java.util.*
 @RestController
 @RequestMapping("/accounts")
 class AccountController(
-    val accountEsService: EventSourcingService<UUID, AccountAggregate, Account>
+    val accountEsService: EventSourcingService<UUID, AccountAggregate, Account>,
 ) {
 
     @PostMapping("/{holderId}")

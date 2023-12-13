@@ -5,7 +5,6 @@ import ru.quipy.core.annotations.StateTransitionFunc
 import ru.quipy.domain.AggregateState
 import java.util.*
 
-import ru.quipy.bank.transfers.api.*
 import ru.quipy.bank.transfers.logic.TransferTransaction.ParticipantState.*
 import ru.quipy.bank.transfers.logic.TransferTransaction.TransactionState.*
 import ru.quipy.bank.transfers.logic.TransferTransaction.TransactionState.NOT_CONFIRMED

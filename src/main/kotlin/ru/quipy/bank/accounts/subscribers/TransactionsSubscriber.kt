@@ -30,7 +30,7 @@ class TransactionsSubscriber(
 
                     val sagaContext = sagaManager
                         .withContextGiven(event.sagaContext)
-                        .performSagaStep("TRANSACTION_PROCESSING","transaction processing").sagaContext
+                        .performSagaStep("TRANSACTION_SAGA","transaction processing").sagaContext
 
                     val transactionOutcome1 = accountEsService.update(event.sourceAccountId, sagaContext) { // todo sukhoa idempotence!
                         it.performTransferFrom(
@@ -55,7 +55,7 @@ class TransactionsSubscriber(
 
                     val sagaContext = sagaManager
                         .withContextGiven(event.sagaContext)
-                        .performSagaStep("TRANSACTION_PROCESSING","transaction confirmation").sagaContext
+                        .performSagaStep("TRANSACTION_SAGA","transaction confirmation").sagaContext
 
                     val transactionOutcome1 = accountEsService.update(event.sourceAccountId, sagaContext) { // todo sukhoa idempotence!
                         it.processPendingTransaction(event.sourceBankAccountId, event.transferId)
