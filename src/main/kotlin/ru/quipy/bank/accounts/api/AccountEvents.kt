@@ -15,6 +15,33 @@ const val TRANSFER_TRANSACTION_ACCEPTED = "TRANSFER_TRANSACTION_ACCEPTED"
 const val TRANSFER_TRANSACTION_DECLINED = "TRANSFER_TRANSACTION_DECLINED"
 const val TRANSFER_TRANSACTION_PROCESSED = "TRANSFER_TRANSACTION_PROCESSED"
 const val TRANSFER_TRANSACTION_ROLLBACKED = "TRANSFER_TRANSACTION_ROLLBACKED"
+const val INTERNAL_ACCOUNT_SEND_EVENT = "INTERNAL_ACCOUNT_SEND_EVENT"
+const val INTERNAL_ACCOUNT_RECEIVE_EVENT = "INTERNAL_ACCOUNT_RECEIVE_EVENT"
+
+
+
+@DomainEvent(name = INTERNAL_ACCOUNT_SEND_EVENT)
+data class InternalAccountSendEvent(
+    val transactionId: UUID,
+    val accountId: UUID,
+    val bankAccountIdFrom: UUID,
+    val bankAccountIdTo : UUID,
+    val amount : BigDecimal
+) : Event<AccountAggregate>(
+    name = INTERNAL_ACCOUNT_SEND_EVENT,
+)
+
+@DomainEvent(name = INTERNAL_ACCOUNT_RECEIVE_EVENT)
+data class InternalAccountReceiveEvent(
+    val transactionId: UUID,
+    val fromAccountId: UUID,
+    val bankAccountIdFrom: UUID,
+    val toAccountId : UUID,
+    val bankAccountIdTo : UUID,
+    val amount : BigDecimal
+) : Event<AccountAggregate>(
+    name = INTERNAL_ACCOUNT_RECEIVE_EVENT,
+)
 
 
 @DomainEvent(name = ACCOUNT_CREATED)
@@ -77,6 +104,18 @@ data class TransferTransactionDeclinedEvent(
     val accountId: UUID,
     val bankAccountId: UUID,
     val transactionId: UUID,
+    val amount: BigDecimal,
+    val reason: String
+) : Event<AccountAggregate>(
+    name = TRANSFER_TRANSACTION_DECLINED,
+)
+
+@DomainEvent(name = TRANSFER_TRANSACTION_DECLINED)
+data class TransactionCancelEvent(
+    val accountId: UUID,
+    val bankAccountId: UUID,
+    val transactionId: UUID,
+    val amount: BigDecimal,
     val reason: String
 ) : Event<AccountAggregate>(
     name = TRANSFER_TRANSACTION_DECLINED,

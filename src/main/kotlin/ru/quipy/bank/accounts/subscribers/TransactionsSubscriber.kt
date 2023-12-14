@@ -4,6 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import ru.quipy.bank.accounts.api.AccountAggregate
+import ru.quipy.bank.accounts.api.InternalAccountSendEvent
 import ru.quipy.bank.accounts.logic.Account
 import ru.quipy.bank.transfers.api.TransactionConfirmedEvent
 import ru.quipy.bank.transfers.api.TransferTransactionAggregate
@@ -30,25 +31,15 @@ class TransactionsSubscriber(
 
                     val sagaContext = sagaManager
                         .withContextGiven(event.sagaContext)
-                        .performSagaStep("TRANSACTION_SAGA","transaction processing").sagaContext
+                        .performSagaStep("TRANSACTION_SAGA","outcome transaction").sagaContext
 
-                    val transactionOutcome1 = accountEsService.update(event.sourceAccountId, sagaContext) { // todo sukhoa idempotence!
-                        it.performTransferFrom(
+                    val outcomeTransaction = accountEsService.update(event.sourceAccountId){
+                        it.sendTransaction(
                             event.sourceBankAccountId,
-                            event.transferId,
-                            event.transferAmount
-                        )
-                    }
-
-                    val transactionOutcome2 = accountEsService.update(event.destinationAccountId, sagaContext) { // todo sukhoa idempotence!
-                        it.performTransferTo(
                             event.destinationBankAccountId,
                             event.transferId,
-                            event.transferAmount
-                        )
+                            event.transferAmount)
                     }
-
-                    logger.info("Transaction: ${event.transferId}. Outcomes: $transactionOutcome1, $transactionOutcome2")
                 }
                 `when`(TransactionConfirmedEvent::class) { event ->
                     logger.info("Got transaction confirmed event: $event")
@@ -68,6 +59,7 @@ class TransactionsSubscriber(
                     logger.info("Transaction: ${event.transferId}. Outcomes: $transactionOutcome1, $transactionOutcome2")
                 }
                 // todo sukhoa bank account deleted event
+
             }
     }
 }

@@ -31,7 +31,6 @@ class TransferController(
         val sagaContext = sagaManager
             .launchSaga("TRANSACTION_SAGA", "initiateTransaction")
             .sagaContext
-
         return transactionService.initiateTransferTransaction(sourceBankAccountId, destinationBankAccountId, transferAmmount)
 
     }
