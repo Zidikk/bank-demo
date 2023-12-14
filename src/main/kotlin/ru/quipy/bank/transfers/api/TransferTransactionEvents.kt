@@ -28,35 +28,35 @@ data class TransferTransactionCreatedEvent(
     name = TRANSFER_TRANSACTION_CREATED,
 )
 
-@DomainEvent(name = TRANSFER_PARTICIPANT_ACCEPTED)
-data class TransferParticipantAcceptedEvent(
-    val transferId: UUID,
-    val participantBankAccountId: UUID,
-) : Event<TransferTransactionAggregate>(
-    name = TRANSFER_PARTICIPANT_ACCEPTED,
-)
+//@DomainEvent(name = TRANSFER_PARTICIPANT_ACCEPTED)
+//data class TransferParticipantAcceptedEvent(
+//    val transferId: UUID,
+//    val participantBankAccountId: UUID,
+//) : Event<TransferTransactionAggregate>(
+//    name = TRANSFER_PARTICIPANT_ACCEPTED,
+//)
 
-@DomainEvent(name = TRANSFER_CONFIRMED)
-data class TransactionConfirmedEvent(
-    val transferId: UUID,
-    val sourceAccountId: UUID,
-    val sourceBankAccountId: UUID,
-    val destinationAccountId: UUID,
-    val destinationBankAccountId: UUID,
-) : Event<TransferTransactionAggregate>(
-    name = TRANSFER_CONFIRMED,
-)
+//@DomainEvent(name = TRANSFER_CONFIRMED)
+//data class TransactionConfirmedEvent(
+//    val transferId: UUID,
+//    val sourceAccountId: UUID,
+//    val sourceBankAccountId: UUID,
+//    val destinationAccountId: UUID,
+//    val destinationBankAccountId: UUID,
+//) : Event<TransferTransactionAggregate>(
+//    name = TRANSFER_CONFIRMED,
+//)
 
-@DomainEvent(name = TRANSFER_NOT_CONFIRMED)
-data class TransactionNotConfirmedEvent(
-    val transferId: UUID,
-    val sourceAccountId: UUID,
-    val sourceBankAccountId: UUID,
-    val destinationAccountId: UUID,
-    val destinationBankAccountId: UUID,
-) : Event<TransferTransactionAggregate>(
-    name = TRANSFER_NOT_CONFIRMED,
-)
+//@DomainEvent(name = TRANSFER_NOT_CONFIRMED)
+//data class TransactionNotConfirmedEvent(
+//    val transferId: UUID,
+//    val sourceAccountId: UUID,
+//    val sourceBankAccountId: UUID,
+//    val destinationAccountId: UUID,
+//    val destinationBankAccountId: UUID,
+//) : Event<TransferTransactionAggregate>(
+//    name = TRANSFER_NOT_CONFIRMED,
+//)
 
 @DomainEvent(name = NOOP)
 data class NoopEvent(
@@ -65,21 +65,21 @@ data class NoopEvent(
     name = NOOP,
 )
 
-@DomainEvent(name = TRANSFER_PARTICIPANT_COMMITTED)
-data class TransferParticipantCommittedEvent(
-    val transferId: UUID,
-    val participantBankAccountId: UUID,
-) : Event<TransferTransactionAggregate>(
-    name = TRANSFER_PARTICIPANT_COMMITTED,
-)
+//@DomainEvent(name = TRANSFER_PARTICIPANT_COMMITTED)
+//data class TransferParticipantCommittedEvent(
+//    val transferId: UUID,
+//    val participantBankAccountId: UUID,
+//) : Event<TransferTransactionAggregate>(
+//    name = TRANSFER_PARTICIPANT_COMMITTED,
+//)
 
-@DomainEvent(name = TRANSFER_PARTICIPANT_ROLLBACKED)
-data class TransferParticipantRollbackedEvent(
-    val transferId: UUID,
-    val participantBankAccountId: UUID,
-) : Event<TransferTransactionAggregate>(
-    name = TRANSFER_PARTICIPANT_ROLLBACKED,
-)
+//@DomainEvent(name = TRANSFER_PARTICIPANT_ROLLBACKED)
+//data class TransferParticipantRollbackedEvent(
+//    val transferId: UUID,
+//    val participantBankAccountId: UUID,
+//) : Event<TransferTransactionAggregate>(
+//    name = TRANSFER_PARTICIPANT_ROLLBACKED,
+//)
 
 
 @DomainEvent(name = TRANSFER_SUCCEEDED)

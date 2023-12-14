@@ -48,18 +48,16 @@ class TransferTransaction : AggregateState<UUID, TransferTransactionAggregate> {
        return TransactionFailedEvent(transferId)
     }
 
+
     @StateTransitionFunc
     fun initiateTransferTransaction(event: TransferTransactionCreatedEvent) {
+        transactionState = CREATED
         this.transferId = event.transferId
         this.sourceParticipant = Participant(event.sourceAccountId, event.sourceBankAccountId)
         this.destinationParticipant = Participant(event.destinationAccountId, event.destinationBankAccountId)
         this.transferAmount = event.transferAmount
     }
 
-    @StateTransitionFunc
-    fun confirmed(event: TransferTransactionCreatedEvent) {
-        transactionState = CREATED
-    }
 
     @StateTransitionFunc
     fun succeeded(event: TransactionSucceededEvent) {

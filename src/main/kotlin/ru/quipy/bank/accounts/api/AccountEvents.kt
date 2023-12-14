@@ -17,10 +17,10 @@ const val TRANSFER_TRANSACTION_PROCESSED = "TRANSFER_TRANSACTION_PROCESSED"
 const val TRANSFER_TRANSACTION_ROLLBACKED = "TRANSFER_TRANSACTION_ROLLBACKED"
 const val INTERNAL_ACCOUNT_SEND_EVENT = "INTERNAL_ACCOUNT_SEND_EVENT"
 const val INTERNAL_ACCOUNT_RECEIVE_EVENT = "INTERNAL_ACCOUNT_RECEIVE_EVENT"
+const val TRANSACTION_CANCEL_EVENT = "TRANSACTION_CANCEL_EVENT"
 
 
-
-@DomainEvent(name = INTERNAL_ACCOUNT_SEND_EVENT)
+        @DomainEvent(name = INTERNAL_ACCOUNT_SEND_EVENT)
 data class InternalAccountSendEvent(
     val transactionId: UUID,
     val accountId: UUID,
@@ -110,7 +110,7 @@ data class TransferTransactionDeclinedEvent(
     name = TRANSFER_TRANSACTION_DECLINED,
 )
 
-@DomainEvent(name = TRANSFER_TRANSACTION_DECLINED)
+@DomainEvent(name = TRANSACTION_CANCEL_EVENT)
 data class TransactionCancelEvent(
     val accountId: UUID,
     val bankAccountId: UUID,
@@ -118,7 +118,7 @@ data class TransactionCancelEvent(
     val amount: BigDecimal,
     val reason: String
 ) : Event<AccountAggregate>(
-    name = TRANSFER_TRANSACTION_DECLINED,
+    name = TRANSACTION_CANCEL_EVENT,
 )
 
 @DomainEvent(name = TRANSFER_TRANSACTION_PROCESSED)

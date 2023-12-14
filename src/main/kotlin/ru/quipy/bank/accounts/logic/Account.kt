@@ -1,6 +1,7 @@
 package ru.quipy.bank.accounts.logic
 
 import ru.quipy.bank.accounts.api.*
+import ru.quipy.bank.transfers.api.TransactionFailedEvent
 import ru.quipy.core.annotations.StateTransitionFunc
 import ru.quipy.domain.AggregateState
 import ru.quipy.domain.Event
@@ -162,6 +163,11 @@ class Account : AggregateState<UUID, AccountAggregate> {
     }
 
     @StateTransitionFunc
+    fun nothing(event: TransactionCancelEvent){
+
+    }
+
+    @StateTransitionFunc
     fun createNewBankAccount(event: AccountCreatedEvent) {
         accountId = event.accountId
         holderId = event.userId
@@ -209,7 +215,14 @@ class Account : AggregateState<UUID, AccountAggregate> {
 
     @StateTransitionFunc
     fun sendMoney(event:InternalAccountSendEvent){
+        val bankAccount = bankAccounts[event.bankAccountIdFrom]
+        bankAccount?.withdraw(event.amount)
+    }
 
+    @StateTransitionFunc
+    fun receiveMoney(event:InternalAccountReceiveEvent){
+        val bankAccount = bankAccounts[event.bankAccountIdTo]
+        bankAccount?.deposit(event.amount)
     }
 
     @StateTransitionFunc
